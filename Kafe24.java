@@ -11,6 +11,9 @@ public class Kafe24 {
         System.out.println("Silahkan pilih menu yang Anda inginkan.");
     }
     public static void main(String[] args) {
+        //Modifikasi Pertanyaan 2 Memanggil fungsi Menu() sebanyak 3 kali
+        Menu();
+        Menu();
         Menu();
     }
 }
