@@ -26,17 +26,59 @@ public class Kafe24 {
         int hargaTotal = hargaItems[pilihanMenu - 1] * banyakItem;
         return hargaTotal;
     }
+    //Modifikasi Pertanyaan 4 Fungsi hitungDiskon
+    public static int hitungDiskon(int total, String kodePromo, boolean isMember) {
+        int diskonPromo = 0;
+        if (kodePromo.equals("DISKON50")) {
+            diskonPromo = total * 50 / 100;
+        } else if (kodePromo.equals("DISKON30")) {
+            diskonPromo = total * 30 / 100;
+        } else {
+            System.out.println("Kode promo invalid");
+        }
+
+        int diskonMember = 0;
+        if (isMember) {
+            diskonMember = total * 10 / 100;
+        }
+
+        return diskonPromo + diskonMember;
+    }
     public static void main(String[] args) {
         Scanner sc= new Scanner(System.in);
-        Menu("Andi", true);
+        boolean isMember = true;
+        Menu("Andi", isMember);
 
-       System.out.print("\nMasukan nomor menu yang ingin Anda pesan: ");
-       int pilihanMenu = sc.nextInt();
-       System.out.print("Masukan jumlah item yang ingin dipesan: ");
-       int banyakItem = sc.nextInt();
+        int totalHargaKeseluruhan = 0;
+        String lanjut;
 
-       int totalBayar = hitungTotalHarga24(pilihanMenu, banyakItem);
+        //Modifikasi Pertanyaan 3a & 3b
+        do {
+            System.out.print("\nMasukan nomor menu yang ingin Anda pesan: ");
+            int pilihanMenu = sc.nextInt();
 
-       System.out.println("Total harga untuk pesanan Anda: Rp" + totalBayar);
+            if (pilihanMenu < 1 || pilihanMenu > 6) {
+                System.out.println("Menu tidak tersedia");
+            } else {
+                System.out.print("Masukan jumlah item yang ingin dipesan: ");
+                int banyakItem = sc.nextInt();
+                totalHargaKeseluruhan += hitungTotalHarga24(pilihanMenu, banyakItem);
+            }
+
+            sc.nextLine();
+            System.out.print("Apakah ingin memesan menu lain? (y/n): ");
+            lanjut = sc.nextLine();
+        } while (lanjut.equalsIgnoreCase("y"));
+
+        System.out.print("Masukan kode promo: ");
+        String kodePromo = sc.nextLine();
+
+        int besarDiskon = hitungDiskon(totalHargaKeseluruhan, kodePromo, isMember);
+        int totalAkhir = totalHargaKeseluruhan - besarDiskon;
+
+        System.out.println("\nTotal harga sebelum diskon: Rp" + totalHargaKeseluruhan);
+        System.out.println("Besar diskon: Rp" + besarDiskon);
+        System.out.println("Total yang harus dibayar: Rp" + totalAkhir);
+       
     }
 }
